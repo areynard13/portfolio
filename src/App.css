@@ -1,0 +1,16 @@
+.portfolio-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.portfolio-hero .dot-field-container {
+  position: absolute;
+  inset: 0;
+}
+
+.portfolio-hero .tech-text {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
