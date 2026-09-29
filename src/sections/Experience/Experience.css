@@ -1,0 +1,267 @@
+.exp {
+  /* local light theme: only affects this section */
+  --exp-bg: #ffffff;
+  --exp-card: #fafafa;
+  --exp-line: #e4e4e7;
+  --exp-text: #09090b;
+  --exp-muted: #52525b;
+  --exp-dim: #71717a;
+  --exp-brand-strong: color-mix(in srgb, var(--brand) 75%, #000); /* readable on white */
+
+  background: var(--exp-bg);
+  color: var(--exp-text);
+  font-family: var(--font-code);
+  border-top: 1px dashed rgba(var(--brand-rgb), 0.5);
+  overflow: hidden;
+}
+
+.exp-inner {
+  width: min(90vw, 900px);
+  margin: 0 auto;
+  padding: 7rem 0 8rem;
+}
+
+/* ---------- Header ---------- */
+.exp-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 4.5rem;
+}
+
+.exp-index {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--exp-brand-strong);
+}
+
+.exp-header h2 {
+  margin: 1rem 0 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.exp-header h2 em {
+  font-style: normal;
+  color: var(--brand);
+}
+
+.exp-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px #a1a1aa;
+}
+
+.exp-count small {
+  margin-top: 0.5rem;
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--exp-dim);
+  -webkit-text-stroke: 0;
+}
+
+/* ---------- Timeline ---------- */
+.exp-timeline {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 2.5rem;
+  list-style: none;
+}
+
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.45rem;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--brand), var(--exp-line) 85%);
+}
+
+.exp-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.exp-item:last-child {
+  padding-bottom: 0;
+}
+
+.exp-dot {
+  position: absolute;
+  top: 1.7rem;
+  left: -2.5rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  box-sizing: border-box;
+  border: 1px solid var(--brand);
+  border-radius: 50%;
+  background: var(--exp-bg);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exp-item:hover .exp-dot {
+  background: var(--brand);
+  box-shadow: 0 0 0 5px rgba(var(--brand-rgb), 0.18);
+}
+
+/* ---------- Card ---------- */
+.exp-card {
+  padding: 1.75rem 2rem 2rem;
+  background: var(--exp-card);
+  border: 1px solid var(--exp-line);
+  border-radius: 12px;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exp-item:hover .exp-card {
+  border-color: rgba(var(--brand-rgb), 0.55);
+  box-shadow: 0 10px 30px rgba(var(--brand-rgb), 0.1);
+  transform: translateX(6px);
+}
+
+.exp-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+}
+
+.exp-period {
+  color: var(--exp-dim);
+}
+
+.exp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.15rem 0.7rem;
+  border: 1px solid rgba(var(--brand-rgb), 0.5);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--exp-brand-strong);
+}
+
+.exp-badge i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+  animation: exp-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes exp-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.exp-card h3 {
+  margin: 1.1rem 0 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.exp-card h3 a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.exp-card h3 a:hover {
+  color: var(--exp-brand-strong);
+}
+
+.exp-role {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  color: var(--exp-brand-strong);
+}
+
+.exp-role span {
+  color: var(--exp-dim);
+}
+
+/* ---------- Highlights ---------- */
+.exp-highlights {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.exp-highlights li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--exp-muted);
+}
+
+.exp-highlights li + li {
+  margin-top: 0.5rem;
+}
+
+.exp-highlights li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--brand);
+}
+
+/* ---------- Tags ---------- */
+.exp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.exp-tags li {
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(var(--brand-rgb), 0.1);
+  font-size: 0.75rem;
+  color: var(--exp-brand-strong);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .exp-timeline {
+    padding-left: 1.75rem;
+  }
+
+  .exp-dot {
+    left: -1.75rem;
+  }
+
+  .exp-card {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .exp-item:hover .exp-card {
+    transform: none;
+  }
+}
