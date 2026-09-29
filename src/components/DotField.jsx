@@ -107,8 +107,10 @@ const DotField = memo(({
     const speedInterval = setInterval(updateMouseSpeed, 20);
 
     let frameCount = 0;
+    let visible = true;
 
     function tick() {
+      if (!visible) { rafRef.current = null; return; }
       frameCount++;
       const dots = dotsRef.current;
       const m = mouseRef.current;
@@ -205,6 +207,12 @@ const DotField = memo(({
       rafRef.current = requestAnimationFrame(tick);
     }
 
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !rafRef.current) rafRef.current = requestAnimationFrame(tick);
+    });
+    io.observe(canvas);
+
     doResize();
     window.addEventListener('resize', resize);
     window.addEventListener('mousemove', onMouseMove, { passive: true });
@@ -221,6 +229,7 @@ const DotField = memo(({
       clearTimeout(resizeTimer);
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMouseMove);
+      io.disconnect();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

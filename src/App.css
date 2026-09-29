@@ -1,24 +1,8 @@
-.portfolio-hero {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-}
-
-.portfolio-hero .dot-field-container {
-  position: absolute;
-  inset: 0;
-}
-
-.portfolio-hero .tech-text {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
+/* ---------- HERO ---------- */
 .portfolio-hero {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100svh;
   overflow: hidden;
 }
 
@@ -41,6 +25,7 @@
 .hero-subtitle {
   width: min(90vw, 1000px);
   box-sizing: border-box;
+  padding-left: 5%;
   margin: 0;
   text-align: left;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -49,4 +34,194 @@
   letter-spacing: 0.02em;
   color: #000;
   user-select: none;
+}
+
+/* ---------- EDUCATION ---------- */
+.edu {
+  background: #000;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  overflow: hidden;
+}
+
+/* Marquee band */
+.marquee {
+  border-block: 1px solid #1f1f23;
+  background: #050505;
+  overflow: hidden;
+  padding: 0.9rem 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.marquee-group span {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #71717a;
+  white-space: nowrap;
+}
+
+.marquee-group i {
+  font-style: normal;
+  color: #A855F7;
+  margin: 0 2rem;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Content */
+.edu-inner {
+  width: min(90vw, 1100px);
+  margin: 0 auto;
+  padding: 7rem 0 8rem;
+}
+
+.edu-header { margin-bottom: 5rem; }
+
+.edu-index {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #A855F7;
+}
+
+.edu-header h2 {
+  margin: 1rem 0 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(3rem, 11vw, 8rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.edu-header h2 em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #A855F7;
+}
+
+.edu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #1f1f23;
+}
+
+.edu-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 2rem;
+  padding: 2.5rem 0.5rem;
+  border-bottom: 1px solid #1f1f23;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.edu-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  background: #A855F7;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+
+.edu-row:hover {
+  background: rgba(168, 85, 247, 0.05);
+  padding-left: 1.25rem;
+}
+
+.edu-row:hover::before { transform: scaleX(1); }
+
+.edu-years {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: #71717a;
+  padding-top: 0.6rem;
+}
+
+.edu-main h3 {
+  margin: 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  transition: color 0.3s ease;
+}
+
+.edu-row:hover .edu-main h3 { color: #d8b4fe; }
+
+.edu-school {
+  margin: 0.4rem 0 0;
+  color: #A855F7;
+  font-size: 0.95rem;
+}
+
+.edu-side p {
+  margin: 0;
+  color: #a1a1aa;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.edu-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+}
+
+.edu-tags li {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid #2a2a30;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #a1a1aa;
+}
+
+/* Reveal on scroll (opacity + transform only = cheap) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease var(--d, 0ms), transform 0.7s ease var(--d, 0ms),
+    background-color 0.3s ease, padding 0.3s ease;
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 800px) {
+  .edu-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .edu-years { padding-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
 }
