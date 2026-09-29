@@ -14,3 +14,39 @@
   inset: 0;
   z-index: 1;
 }
+
+.portfolio-hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hero-title {
+  width: min(90vw, 1000px);
+  height: 220px;
+  pointer-events: auto;
+}
+
+.hero-subtitle {
+  width: min(90vw, 1000px);
+  box-sizing: border-box;
+  margin: 0;
+  text-align: left;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #000;
+  user-select: none;
+}
