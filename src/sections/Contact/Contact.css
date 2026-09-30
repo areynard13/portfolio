@@ -1,0 +1,141 @@
+.contact {
+  position: relative;
+  overflow: hidden;
+  background: #050505;
+  color: #fff;
+  font-family: var(--font-code);
+  border-top: 1px dashed rgba(var(--brand-rgb), 0.4);
+}
+
+/* brand glow behind the icons (static, no animation = no lag) */
+.contact::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -20%;
+  width: min(900px, 120vw);
+  height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(var(--brand-rgb), 0.22), transparent);
+  pointer-events: none;
+}
+
+.contact-inner {
+  position: relative;
+  width: min(90vw, 900px);
+  margin: 0 auto;
+  padding: 8rem 0 4rem;
+  text-align: center;
+}
+
+.contact-index {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.contact-title {
+  margin: 1.25rem 0 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(3rem, 11vw, 8rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.contact-title em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--brand);
+}
+
+.contact-text {
+  max-width: 48ch;
+  margin: 2rem auto 0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+/* ---------- Email ---------- */
+.contact-mail {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.contact-mail a {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid var(--brand);
+  padding-bottom: 0.2rem;
+  transition: color 0.3s ease;
+}
+
+.contact-mail a:hover {
+  color: var(--brand-light);
+}
+
+.contact-mail button {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #2a2a30;
+  border-radius: 999px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-mail button:hover {
+  border-color: var(--brand);
+  color: var(--brand-light);
+}
+
+/* ---------- Glass icons (overrides) ---------- */
+.contact .contact-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3.5rem;
+  margin: 3rem auto 0;
+  padding: 2rem 0 3rem;
+}
+
+.contact .contact-icons a.icon-btn {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* no hover on touch screens: keep labels visible */
+@media (hover: none) {
+  .contact .icon-btn__label {
+    opacity: 1;
+    transform: translateY(20%);
+  }
+}
+
+/* ---------- Footer ---------- */
+.contact-footer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: min(90vw, 1100px);
+  margin: 0 auto;
+  padding: 1.5rem 0 2rem;
+  border-top: 1px solid var(--line-dark);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
