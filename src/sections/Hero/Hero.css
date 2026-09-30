@@ -1,10 +1,15 @@
 .hero {
+  --hero-brand-strong: color-mix(in srgb, var(--brand) 70%, #000); /* readable on the light background */
+
   position: relative;
   width: 100%;
   height: 100svh;
+  min-height: 560px;
   overflow: hidden;
+  color: #000;
 }
 
+/* ---------- Center ---------- */
 .hero-content {
   position: absolute;
   inset: 0;
@@ -21,22 +26,237 @@
   pointer-events: auto; /* keeps TechText hover / drag */
 }
 
-.hero-subtitle {
+.hero-info {
   width: min(90vw, 1000px);
   box-sizing: border-box;
-  margin: 0;
   padding-left: 5%; /* matches the 5% margin TechText leaves on the left */
-  text-align: left;
-  font-family: var(--font-code);
+}
+
+.hero-subtitle {
+  margin: 0;
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: #000;
   user-select: none;
 }
 
-@media (max-width: 600px) {
+.hero-bio {
+  max-width: 52ch;
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #3f3f46;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  pointer-events: auto;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid #000;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.hero-btn--solid {
+  background: #000;
+  color: #fff;
+}
+
+.hero-btn--solid:hover {
+  background: var(--hero-brand-strong);
+  border-color: var(--hero-brand-strong);
+}
+
+.hero-btn--ghost {
+  background: transparent;
+  color: #000;
+}
+
+.hero-btn--ghost:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ---------- Top bar ---------- */
+.hero-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-nav ul {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-nav a {
+  color: #000;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.hero-nav a:hover {
+  color: var(--hero-brand-strong);
+}
+
+.hero-nav li a span {
+  margin-right: 0.5rem;
+  color: var(--hero-brand-strong);
+}
+
+.hero-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+
+.hero-logo span {
+  color: var(--hero-brand-strong);
+}
+
+/* ---------- Bottom bar ---------- */
+.hero-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-scroll {
+  grid-column: 2; /* stays centered */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.hero-scroll i {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 34px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.hero-scroll i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  animation: hero-scroll 2s ease-in-out infinite;
+}
+
+.hero-socials {
+  grid-column: 3;
+  display: flex;
+  gap: 1.5rem;
+  justify-self: end;
+}
+
+.hero-socials a {
+  color: #000;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.hero-socials a:hover {
+  color: var(--hero-brand-strong);
+}
+
+/* ---------- Animations (opacity / transform only) ---------- */
+.hero-anim {
+  animation: hero-in 0.8s ease var(--d, 0ms) both;
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes hero-scroll {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+  .hero-nav ul {
+    gap: 1rem;
+  }
+
+  .hero-nav li a span {
+    display: none;
+  }
+
   .hero-subtitle {
     font-size: 1rem;
+  }
+
+  .hero-bio {
+    font-size: 0.85rem;
+  }
+
+  .hero-bottom { display: none; }
+
+  .hero-scroll,
+  .hero-socials {
+    display: none;
+  }
+}
+
+@media (max-height: 680px) {
+  .hero-bio {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim,
+  .hero-scroll i::after {
+    animation: none;
   }
 }
