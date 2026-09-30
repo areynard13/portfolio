@@ -24,13 +24,13 @@ const items = [
     label: 'Email',
     href: `mailto:${contact.email}`,
   },
-  {
-    icon: <FiFileText />,
-    color: 'linear-gradient(135deg, #f59e0b, #b45309)',
-    label: 'Resume',
-    href: contact.cv,
-    download: true,
-  },
+  // {
+  //   icon: <FiFileText />,
+  //   color: 'linear-gradient(135deg, #f59e0b, #b45309)',
+  //   label: 'Resume',
+  //   href: contact.cv,
+  //   download: true,
+  // },
 ];
 
 const Contact = () => {
