@@ -13,11 +13,11 @@ const navLinks = [
 const Hero = () => (
   <section className="hero" id="home">
     <DotField
-      dotRadius={1.5}
+      dotRadius={1.6}
       dotSpacing={14}
-      bulgeStrength={12}
+      bulgeStrength={80}
       glowRadius={50}
-      sparkle={false}
+      sparkle={true}
       waveAmplitude={0}
       cursorRadius={500}
       cursorForce={0.1}

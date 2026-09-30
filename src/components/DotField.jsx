@@ -261,7 +261,7 @@ const DotField = memo(({
       >
         <defs>
           <radialGradient id={glowIdRef.current}>
-            <stop offset="0%" stopColor={glowColor} />
+            <stop offset="0%" stopColor="transparent" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
