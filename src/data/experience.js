@@ -11,7 +11,7 @@ export const experience = [
       'Using development, version control and collaboration tools in a professional environment.',
     ],
     tags: ['Software Development', 'Git', 'ISC'],
-    link: 'https://www.hevs.ch/fr/hautes-ecoles/haute-ecole-d-ingenierie/informatique-et-systemes-de-communication/',
+    link: 'https://isc.hevs.ch/landing',
   },
   {
     company: 'Idiap Research Institute',
@@ -39,6 +39,6 @@ export const experience = [
       'Worked collaboratively using version control and development tools.',
     ],
     tags: ['Software Development', 'ISC'],
-    link: 'https://www.hevs.ch/fr/hautes-ecoles/haute-ecole-d-ingenierie/informatique-et-systemes-de-communication/',
+    link: 'https://isc.hevs.ch/landing',
   },
 ];
