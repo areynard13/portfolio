@@ -16,22 +16,52 @@ const GlassIcons = ({ items, className }) => {
     if (gradientMapping[color]) {
       return { background: gradientMapping[color] };
     }
+
     return { background: color };
   };
 
   return (
     <div className={`icon-btns ${className || ''}`}>
-      {items.map((item, index) => (
-        <button key={index} className={`icon-btn ${item.customClass || ''}`} aria-label={item.label} type="button">
-          <span className="icon-btn__back" style={getBackgroundStyle(item.color)}></span>
-          <span className="icon-btn__front">
-            <span className="icon-btn__icon" aria-hidden="true">
-              {item.icon}
+      {items.map((item, index) => {
+        const Tag = item.href ? 'a' : 'button';
+
+        const props = item.href
+          ? {
+              href: item.href,
+              ...(item.href.startsWith('http') && {
+                target: '_blank',
+                rel: 'noreferrer'
+              }),
+              ...(item.download && {
+                download: true
+              })
+            }
+          : {
+              type: 'button'
+            };
+
+        return (
+          <Tag
+            key={index}
+            className={`icon-btn ${item.customClass || ''}`}
+            aria-label={item.label}
+            {...props}
+          >
+            <span
+              className="icon-btn__back"
+              style={getBackgroundStyle(item.color)}
+            ></span>
+
+            <span className="icon-btn__front">
+              <span className="icon-btn__icon" aria-hidden="true">
+                {item.icon}
+              </span>
             </span>
-          </span>
-          <span className="icon-btn__label">{item.label}</span>
-        </button>
-      ))}
+
+            <span className="icon-btn__label">{item.label}</span>
+          </Tag>
+        );
+      })}
     </div>
   );
 };
