@@ -36,7 +36,7 @@ const Stats = () => {
       <div className="stats-inner">
         <header className="stats-header">
           <div>
-            <span className="stats-index">04 / Stats</span>
+            <span className="stats-index">05 / Stats</span>
             <h2 id="stats-title">
               GitHub
               <br />
