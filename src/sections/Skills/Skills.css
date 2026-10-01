@@ -1,0 +1,149 @@
+.skills {
+  --sk-bg: #f6f5f8;
+  --sk-text: #09090b;
+  --sk-muted: #52525b;
+  --sk-dim: #71717a;
+  --sk-line: #d4d4d8;
+  --sk-brand-strong: color-mix(in srgb, var(--brand) 75%, #000); /* readable on light */
+
+  background: var(--sk-bg);
+  color: var(--sk-text);
+  font-family: var(--font-code);
+  border-top: 1px dashed rgba(var(--brand-rgb), 0.5);
+  overflow: hidden;
+}
+
+.skills-inner {
+  width: min(90vw, 1100px);
+  margin: 0 auto;
+  padding: 7rem 0 8rem;
+}
+
+/* ---------- Header ---------- */
+.skills-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.skills-index {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sk-brand-strong);
+}
+
+.skills-header h2 {
+  margin: 1rem 0 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.skills-header h2 em {
+  font-style: normal;
+  color: var(--brand);
+}
+
+.skills-hint {
+  padding-bottom: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sk-dim);
+}
+
+/* ---------- Grid ---------- */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* keep the open folder's pills above its neighbours */
+.skill:has(.folder-float[data-open]) {
+  position: relative;
+  z-index: 2;
+}
+
+/* dashed "cloud zone": the pills float inside it */
+.skill-stage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 400px;
+  padding-bottom: 1.75rem;
+  border: 1px dashed var(--sk-line);
+  border-radius: 16px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.skill-stage:has(.folder-float[data-open]) {
+  border-color: rgba(var(--brand-rgb), 0.55);
+  background: rgba(var(--brand-rgb), 0.04);
+}
+
+/* FolderFloat overrides, for a light background */
+.skills .folder-float {
+  font-family: var(--font-code);
+}
+
+.skills .folder-float__item {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(var(--brand-rgb), 0.3);
+  touch-action: none;
+}
+
+/* ---------- Text ---------- */
+.skill h3 {
+  margin: 1.5rem 0 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.skill-glance {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--sk-muted);
+}
+
+.skill-glance span {
+  color: var(--sk-brand-strong);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
