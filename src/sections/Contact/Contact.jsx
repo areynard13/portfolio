@@ -50,7 +50,7 @@ const Contact = () => {
   return (
     <section className="contact" id="contact" ref={ref} aria-labelledby="contact-title">
       <div className="contact-inner">
-        <span className="contact-index reveal">05 / Contact</span>
+        <span className="contact-index reveal">06 / Contact</span>
 
         <h2 id="contact-title" className="contact-title reveal">
           Let&apos;s work
