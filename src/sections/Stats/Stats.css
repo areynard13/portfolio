@@ -1,74 +1,232 @@
 .stats-section {
-  padding: 6rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-code);
+  border-top: 1px dashed rgba(var(--brand-rgb), 0.4);
+  overflow: hidden;
 }
 
 .stats-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+  width: min(90vw, 1100px);
+  margin: 0 auto;
+  padding: 7rem 0 6rem;
 }
 
+/* ---------- Header ---------- */
 .stats-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 4rem;
 }
 
 .stats-index {
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted, #888);
-  margin-bottom: 0.5rem;
   display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brand);
 }
 
 .stats-header h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--text-main, #fff);
+  margin: 1rem 0 0;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
 }
 
 .stats-header h2 em {
-  font-style: italic;
-  color: rgb(var(--brand-rgb, 99, 102, 241));
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--brand);
 }
 
+.stats-profile {
+  padding-bottom: 0.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--line-dark);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.stats-profile:hover {
+  color: var(--brand-light);
+  border-color: var(--brand);
+}
+
+/* ---------- Bento grid ---------- */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  list-style: none;
-  padding: 0;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    'contributions contributions prs followers'
+    'contributions contributions following following';
+  gap: 1.25rem;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.stats-card {
-  padding: 2rem;
+.stats-item {
+  display: flex;
+  min-height: 190px;
+}
+
+.stats-item--contributions { grid-area: contributions; }
+.stats-item--prs           { grid-area: prs; }
+.stats-item--followers     { grid-area: followers; }
+.stats-item--following     { grid-area: following; }
+
+/* ---------- Card (overrides SpotlightCard defaults) ---------- */
+.stats-section .card-spotlight.stats-card {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  height: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 1.5rem 1.75rem;
+  background: #0a0a0c;
+  border: 1px solid var(--line-dark);
+  border-radius: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.stats-section .card-spotlight.stats-card:hover {
+  border-color: rgba(var(--brand-rgb), 0.55);
+}
+
+/* content stays above the spotlight; the dots layer is the only absolute child */
+.stats-card > :not(.stats-dots) {
+  position: relative;
+}
+
+/* dotted texture in the big card, echoing the hero */
+.stats-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  background-image: radial-gradient(rgba(var(--brand-rgb), 0.4) 1px, transparent 1.5px);
+  background-size: 14px 14px;
+  -webkit-mask-image: radial-gradient(ellipse at 100% 0%, #000, transparent 65%);
+  mask-image: radial-gradient(ellipse at 100% 0%, #000, transparent 65%);
+}
+
+.stats-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stats-rank {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+.stats-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(var(--brand-rgb), 0.35);
+  border-radius: 10px;
+  font-size: 1.15rem;
+  color: var(--brand-light);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.stats-card:hover .stats-icon {
+  background: rgba(var(--brand-rgb), 0.15);
+  border-color: var(--brand);
+}
+
+/* ---------- Number + label ---------- */
+.stats-bottom {
+  margin-top: 2rem;
 }
 
 .stats-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--text-main, #fff);
-  letter-spacing: -0.02em;
+  font-family: 'Geist Variable', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.stats-item--contributions .stats-number {
+  font-size: clamp(4rem, 10vw, 7.5rem);
+  letter-spacing: -0.06em;
+}
+
+.stats-number.is-loading {
+  color: #1f1f23;
+  animation: stats-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes stats-pulse {
+  50% {
+    opacity: 0.35;
+  }
 }
 
 .stats-label {
-  font-size: 0.95rem;
-  color: var(--text-muted, #aaa);
-  margin: 0;
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
 }
 
-.stats-loading {
-  color: var(--text-muted, #888);
-  font-size: 1rem;
-  padding: 2rem 0;
+/* ---------- Footer line ---------- */
+.stats-source,
+.stats-error {
+  margin: 2rem 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.stats-error {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.stats-error button {
+  padding: 0.3rem 0.9rem;
+  border: 1px solid #2a2a30;
+  border-radius: 999px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-light);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.stats-error button:hover {
+  border-color: var(--brand);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      'contributions contributions'
+      'prs followers'
+      'following following';
+  }
 }
