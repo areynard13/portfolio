@@ -45,6 +45,8 @@ const Hero = () => (
           text="Adrien Reynard"
           fontWeight={600}
           fontSize={150}
+          minSize={90}
+          lineHeight={0.95}
           reveal="letter"
           dashLength={4}
           dashGap={2}

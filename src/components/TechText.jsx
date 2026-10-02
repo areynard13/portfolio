@@ -34,6 +34,23 @@ const noise = (...values) => {
 
 const signed = value => (value > 0 ? `+${value}` : value < 0 ? `−${-value}` : '0');
 
+// Greedy word wrap: the probe context must already have the right font set.
+const wrapWords = (probe, text, maxWidth) => {
+  const lines = [];
+  let line = '';
+  text.split(' ').forEach(word => {
+    const test = line ? `${line} ${word}` : word;
+    if (line && probe.measureText(test).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  });
+  lines.push(line);
+  return lines;
+};
+
 const TechText = ({
   text = 'React Bits',
   fontFamily = '',
@@ -55,6 +72,8 @@ const TechText = ({
   draggable = true,
   sweep = true,
   speed = 1,
+  minSize = 0,
+  lineHeight = 1,
   className = '',
   style
 }) => {
@@ -84,7 +103,9 @@ const TechText = ({
       labels,
       draggable,
       sweep,
-      speed
+      speed,
+      minSize,
+      lineHeight
     };
     wakeRef.current();
   });
@@ -153,15 +174,15 @@ const TechText = ({
         c.lineCap = 'butt';
         c.strokeStyle = s.color;
         if (s.lineStyle !== 'solid') c.setLineDash([Math.max(1, s.dashLength), Math.max(1, s.dashGap)]);
-        c.strokeText(glyph.char, glyph.x, view.baseline);
+        c.strokeText(glyph.char, glyph.x, glyph.baseline);
         c.setLineDash([]);
         c.globalCompositeOperation = 'destination-out';
         c.fillStyle = '#000000';
-        c.fillText(glyph.char, glyph.x, view.baseline);
+        c.fillText(glyph.char, glyph.x, glyph.baseline);
         c.globalCompositeOperation = 'source-over';
       } else {
         c.fillStyle = s.color;
-        c.fillText(glyph.char, glyph.x, view.baseline);
+        c.fillText(glyph.char, glyph.x, glyph.baseline);
       }
       return { image, left, top };
     };
@@ -178,6 +199,8 @@ const TechText = ({
         s.dashGap,
         s.strokeWidth,
         s.lineStyle,
+        s.minSize,
+        s.lineHeight,
         width,
         height,
         dpr
@@ -191,58 +214,95 @@ const TechText = ({
       }
 
       const probe = scratchCtx;
-      setFont(probe, s, s.fontSize);
-      let m = probe.measureText(s.text);
+
+      // 1. Lines: explicit "\n", plus automatic wrapping when a single line would get too small.
+      let lineTexts = String(s.text).split('\n');
+      if (s.minSize > 0 && lineTexts.length === 1) {
+        setFont(probe, s, s.fontSize);
+        const m = probe.measureText(s.text);
+        const single = Math.min(1, (width * 0.9) / Math.max(m.actualBoundingBoxLeft + m.actualBoundingBoxRight, 1));
+        if (s.fontSize * single < s.minSize) lineTexts = wrapWords(probe, s.text, width * 0.9);
+      }
+      const count = lineTexts.length;
+
+      // 2. Measure the whole block at a given font size.
+      const measure = size => {
+        setFont(probe, s, size);
+        const pitch = size * s.lineHeight;
+        const ms = lineTexts.map(t => probe.measureText(t));
+        const inkW = Math.max(1, ...ms.map(m => m.actualBoundingBoxLeft + m.actualBoundingBoxRight));
+        const ascent = ms[0].actualBoundingBoxAscent;
+        const descent = ms[count - 1].actualBoundingBoxDescent;
+        return { ms, pitch, inkW, ascent, descent, inkH: ascent + (count - 1) * pitch + descent };
+      };
+
+      let block = measure(s.fontSize);
       const fit = Math.min(
         1,
-        (width * 0.9) / Math.max(m.actualBoundingBoxLeft + m.actualBoundingBoxRight, 1),
-        (height * 0.66) / Math.max(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent, 1)
+        (width * 0.9) / block.inkW,
+        (height * (count > 1 ? 0.9 : 0.66)) / Math.max(block.inkH, 1)
       );
       const size = s.fontSize * fit;
-      setFont(probe, s, size);
-      m = probe.measureText(s.text);
-      const inkWidth = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
-      const inkHeight = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
-      const x = (width - inkWidth) / 2 + m.actualBoundingBoxLeft;
-      const baseline = (height - inkHeight) / 2 + m.actualBoundingBoxAscent;
+      block = measure(size);
+      const { ms, pitch } = block;
+      const baseline0 = (height - block.inkH) / 2 + block.ascent;
+
+      // Each line is centered on its own.
+      let left = Infinity;
+      let right = -Infinity;
+      const xs = ms.map(m => {
+        const ink = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
+        const x = (width - ink) / 2 + m.actualBoundingBoxLeft;
+        left = Math.min(left, x - m.actualBoundingBoxLeft);
+        right = Math.max(right, x + m.actualBoundingBoxRight);
+        return x;
+      });
+
       const next = {
         size,
-        baseline,
-        left: x - m.actualBoundingBoxLeft,
-        right: x + m.actualBoundingBoxRight,
-        top: baseline - m.actualBoundingBoxAscent,
-        bottom: baseline + m.actualBoundingBoxDescent
+        lines: count,
+        baseline: baseline0,
+        left,
+        right,
+        top: baseline0 - block.ascent,
+        bottom: baseline0 + (count - 1) * pitch + block.descent
       };
       word = next;
 
-      const chars = Array.from(s.text);
+      // 3. Glyphs, line by line.
       const previous = glyphs;
       glyphs = [];
-      let prefix = '';
-      chars.forEach((char, i) => {
-        prefix += char;
-        const own = probe.measureText(char);
-        const gx = x + probe.measureText(prefix).width - own.width;
-        if (!char.trim()) return;
-        const base = {
-          char,
-          x: gx,
-          box: {
-            x1: gx - own.actualBoundingBoxLeft,
-            y1: baseline - own.actualBoundingBoxAscent,
-            x2: gx + own.actualBoundingBoxRight,
-            y2: baseline + own.actualBoundingBoxDescent
-          }
-        };
-        const kept = previous[glyphs.length];
-        glyphs.push({
-          ...base,
-          offset: kept?.char === char ? kept.offset : { x: 0, y: 0 },
-          velocity: { x: 0, y: 0 },
-          outline: 0,
-          index: i,
-          fill: sprite(s, next, base, false),
-          dashes: sprite(s, next, base, true)
+      let index = 0;
+      lineTexts.forEach((lineText, k) => {
+        const baseline = baseline0 + k * pitch;
+        let prefix = '';
+        Array.from(lineText).forEach(char => {
+          prefix += char;
+          const own = probe.measureText(char);
+          const gx = xs[k] + probe.measureText(prefix).width - own.width;
+          const i = index++;
+          if (!char.trim()) return;
+          const base = {
+            char,
+            x: gx,
+            baseline,
+            box: {
+              x1: gx - own.actualBoundingBoxLeft,
+              y1: baseline - own.actualBoundingBoxAscent,
+              x2: gx + own.actualBoundingBoxRight,
+              y2: baseline + own.actualBoundingBoxDescent
+            }
+          };
+          const kept = previous[glyphs.length];
+          glyphs.push({
+            ...base,
+            offset: kept?.char === char ? kept.offset : { x: 0, y: 0 },
+            velocity: { x: 0, y: 0 },
+            outline: 0,
+            index: i,
+            fill: sprite(s, next, base, false),
+            dashes: sprite(s, next, base, true)
+          });
         });
       });
       dragging = -1;
@@ -250,15 +310,26 @@ const TechText = ({
       return next;
     };
 
+    // Closest glyph to the pointer, line-aware (distance in x AND y).
     const glyphAt = (x, y) => {
       if (!word || y < word.top - 24 || y > word.bottom + 24) return -1;
+      const up = word.size * 0.85;
+      const down = word.size * 0.25;
       let best = -1;
+      let bestScore = Infinity;
       let bestDistance = Infinity;
       glyphs.forEach((glyph, i) => {
         const x1 = glyph.box.x1 + glyph.offset.x;
         const x2 = glyph.box.x2 + glyph.offset.x;
-        const d = x < x1 ? x1 - x : x > x2 ? x - x2 : 0;
-        if (d < bestDistance) {
+        const dx = x < x1 ? x1 - x : x > x2 ? x - x2 : 0;
+        const bandTop = glyph.baseline - up + glyph.offset.y;
+        const bandBottom = glyph.baseline + down + glyph.offset.y;
+        const dy = y < bandTop ? bandTop - y : y > bandBottom ? y - bandBottom : 0;
+        const d = Math.hypot(dx, dy);
+        // tiny tie-breaker: prefer the line whose middle is closest to the pointer
+        const score = d + Math.abs(y - (glyph.baseline + glyph.offset.y - word.size * 0.3)) * 0.001;
+        if (score < bestScore) {
+          bestScore = score;
           bestDistance = d;
           best = i;
         }
@@ -464,8 +535,11 @@ const TechText = ({
       let targetX = pointer.x;
       let targetY = pointer.y;
       if (sweeping) {
+        // with several lines the lens travels over the whole block, not just the middle
+        const spanY = view.lines > 1 ? 0.3 : 0.1;
+        const midY = view.lines > 1 ? 0.5 : 0.45;
         targetX = view.left + (view.right - view.left) * (0.5 - 0.5 * Math.cos(clock * 0.45));
-        targetY = view.top + (view.bottom - view.top) * (0.45 + 0.1 * Math.sin(clock * 0.8));
+        targetY = view.top + (view.bottom - view.top) * (midY + spanY * Math.sin(clock * 0.8));
       }
       const active = pointer.inside || sweeping || dragging >= 0;
       if (active && !placed) {
@@ -660,7 +734,13 @@ const TechText = ({
   }, []);
 
   return (
-    <div ref={containerRef} className={`tech-text ${className}`.trim()} style={style} role="img" aria-label={text}>
+    <div
+      ref={containerRef}
+      className={`tech-text ${className}`.trim()}
+      style={style}
+      role="img"
+      aria-label={text.replace(/\n/g, ' ')}
+    >
       <canvas ref={canvasRef} className="tech-text-canvas" />
     </div>
   );

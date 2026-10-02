@@ -224,6 +224,10 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
+  .hero-title {
+    height: 280px;
+  }
+
   .hero-subtitle {
     font-size: 1rem;
   }
