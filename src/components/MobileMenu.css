@@ -1,0 +1,58 @@
+/* phones + tablets only: the desktop bar in the hero takes over from 900px */
+@media (min-width: 900px) {
+  .mobile-menu {
+    display: none;
+  }
+}
+
+/* ---------- Bubbles ---------- */
+.mobile-menu .bubble-menu {
+  top: calc(1rem + env(safe-area-inset-top, 0px));
+  padding: 0 1rem;
+}
+
+/* the logo bubble was 120px wide by default: shrink it to the text */
+.mobile-menu .bubble-menu .logo-content {
+  width: auto;
+}
+
+.mm-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #111;
+  text-decoration: none;
+}
+
+.mm-logo span {
+  color: color-mix(in srgb, var(--brand) 70%, #000);
+}
+
+/* ---------- Backdrop + pills ---------- */
+.mobile-menu .bubble-menu-items {
+  pointer-events: auto; /* the backdrop blocks the page behind */
+  overflow-y: auto; /* small / landscape screens can scroll the list */
+  background: rgba(5, 5, 5, 0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: mm-fade 0.25s ease;
+}
+
+.mobile-menu .bubble-menu-items .pill-link {
+  min-height: 64px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+@keyframes mm-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu .bubble-menu-items {
+    animation: none;
+  }
+}

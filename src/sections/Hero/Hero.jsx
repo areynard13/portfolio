@@ -1,16 +1,8 @@
 import DotField from '../../components/DotField';
 import TechText from '../../components/TechText';
 import { contact } from '../../data/contact';
+import { navLinks } from '../../data/nav';
 import './Hero.css';
-
-const navLinks = [
-  { label: 'Education', href: '#education' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Stats', href: '#stats' },
-  { label: 'Contact', href: '#contact' },
-];
 
 const Hero = () => (
   <section className="hero" id="home">
