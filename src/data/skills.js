@@ -23,6 +23,6 @@ export const skills = [
   {
     id: 'devops',
     title: 'DevOps & Tools',
-    items: ['Git', 'Docker', 'CI/CD'],
+    items: ['Git', 'Docker', 'CI/CD', 'Ansible'],
   },
 ];
