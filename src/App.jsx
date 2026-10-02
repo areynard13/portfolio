@@ -1,3 +1,5 @@
+import MobileMenu from './components/MobileMenu';
+
 import Hero from './sections/Hero/Hero';
 import Education from './sections/Education/Education';
 import Experience from './sections/Experience/Experience';
@@ -8,6 +10,8 @@ import Contact from './sections/Contact/Contact';
 
 function App() {
   return (
+    <>
+    <MobileMenu />
     <main>
       <Hero />
       <Education />
@@ -16,7 +20,8 @@ function App() {
       <Skills />
       <Stats />
       <Contact />
-    </main>
+      </main>
+    </>
   );
 }
 

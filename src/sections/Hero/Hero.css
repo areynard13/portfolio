@@ -224,14 +224,6 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
-  .hero-nav ul {
-    gap: 1rem;
-  }
-
-  .hero-nav li a span {
-    display: none;
-  }
-
   .hero-subtitle {
     font-size: 1rem;
   }
@@ -258,5 +250,17 @@
   .hero-anim,
   .hero-scroll i::after {
     animation: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero-nav ul {
+    gap: 1.25rem;
   }
 }
