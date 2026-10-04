@@ -63,4 +63,16 @@ export const projects = [
     tags: ['Portfolio', 'Web'],
     stack: ['React', 'Vite', 'React Bits'],
   },
+  {
+    id: 'spotify-wrapped',
+    lang: 'JS',
+    langColor: '#f1e05a',
+    repo: 'spotify-wrapped',
+    org: 'areynard13',
+    desc: 'A website to see your spotify wrapped, including top tracks and artists.',
+    license: 'CC',
+    status: 'In Progress',
+    tags: ['Spotify', 'Web', 'Stats'],
+    stack: ['Next.js', 'NextAuth'],
+  },
 ];
