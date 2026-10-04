@@ -66,20 +66,34 @@ const Projects = () => {
 
                 <footer className="proj-footer">
                   <span className="proj-license">{p.license}</span>
-                  {p.isPrivate ? (
-                    <span className="proj-private">
-                      <LockIcon /> Private repository
-                    </span>
-                  ) : (
-                    <a
-                      className="proj-link"
-                      href={`https://github.com/${p.org}/${p.repo}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      View on GitHub <span aria-hidden="true">↗</span>
-                    </a>
-                  )}
+
+                  <div className="proj-links">
+                    {p.website && (
+                      <a
+                        className="proj-link"
+                        href={p.website}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Visit site <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+
+                    {p.isPrivate ? (
+                      <span className="proj-private">
+                        <LockIcon /> Private repository
+                      </span>
+                    ) : (
+                      <a
+                        className="proj-link"
+                        href={`https://github.com/${p.org}/${p.repo}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        View on GitHub <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                  </div>
                 </footer>
               </SpotlightCard>
             </li>

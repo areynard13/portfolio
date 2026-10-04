@@ -12,6 +12,7 @@ export const projects = [
     status: 'In Progress',
     tags: ['Typst', 'Online-Editor'],
     stack: ['Next.js', 'Prisma', 'PostgreSQL', 'Docker'],
+    website: 'https://tisc.isc-vs.ch',
   },
   {
     id: 'spotivox',
@@ -62,6 +63,7 @@ export const projects = [
     status: 'In Progress',
     tags: ['Portfolio', 'Web'],
     stack: ['React', 'Vite', 'React Bits'],
+    website: 'https://adrien-reynard.ch',
   },
   {
     id: 'spotify-wrapped',
@@ -74,5 +76,6 @@ export const projects = [
     status: 'In Progress',
     tags: ['Spotify', 'Web', 'Stats'],
     stack: ['Next.js', 'NextAuth'],
+    website: 'https://wrapped.adrien-reynard.ch',
   },
 ];
