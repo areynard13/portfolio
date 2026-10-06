@@ -73,7 +73,7 @@ export const projects = [
     org: 'areynard13',
     desc: 'A website to see your spotify wrapped, including top tracks and artists.',
     license: 'CC',
-    status: 'In Progress',
+    status: 'Finished',
     tags: ['Spotify', 'Web', 'Stats'],
     stack: ['Next.js', 'NextAuth'],
     website: 'https://wrapped.adrien-reynard.ch',
