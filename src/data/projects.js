@@ -71,7 +71,7 @@ export const projects = [
     langColor: '#f1e05a',
     repo: 'spotify-wrapped',
     org: 'areynard13',
-    desc: 'A website to see your spotify wrapped, including top tracks and artists.',
+    desc: 'A web application to generate your personalized Spotify Wrapped: view your top tracks and artists, explore listening stats (diversity, release years, decade trends), track listening evolution over time, and export shareable story cards.',
     license: 'CC',
     status: 'Finished',
     tags: ['Spotify', 'Web', 'Stats'],
