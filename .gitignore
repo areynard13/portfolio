@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .env
+
+# Generated at build time by scripts/fetch-github-stats.mjs
+public/github-stats.json

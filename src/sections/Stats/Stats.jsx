@@ -7,7 +7,7 @@ import { fetchGitHubStats } from '../../lib/github';
 import { contact } from '../../data/contact';
 import './Stats.css';
 
-const CACHE_KEY = 'gh-stats-v1';
+const CACHE_KEY = 'gh-stats-v2';
 const CACHE_MS = 10 * 60 * 1000; // 10 minutes
 
 const readCache = () => {
@@ -136,7 +136,15 @@ const Stats = () => {
             </button>
           </p>
         ) : (
-          <p className="stats-source">Fetched from the GitHub API</p>
+          <p className="stats-source">
+            {stats?.updatedAt
+              ? `Updated ${new Date(stats.updatedAt).toLocaleString('en-GB', {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                  timeZone: 'Europe/Zurich',
+                })}`
+              : 'Fetched from the GitHub API'}
+          </p>
         )}
       </div>
     </section>

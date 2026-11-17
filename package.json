@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "stats": "bun scripts/fetch-github-stats.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
