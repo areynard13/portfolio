@@ -15,18 +15,6 @@ export const projects = [
     website: 'https://tisc.isc-vs.ch',
   },
   {
-    id: 'spotivox',
-    lang: 'PY',
-    langColor: '#3572A5',
-    repo: 'spotivox',
-    org: 'areynard13',
-    desc: 'An AI-powered, hands-free voice controller for Spotify, designed for cyclists and commuters. A local wake-word engine (like Bixby or Siri) combined with LLMs runs complex music commands through the Spotify API, without ever touching your phone.',
-    license: 'Apache 2.0',
-    status: 'In Progress',
-    tags: ['AI Agent', 'Spotify'],
-    stack: ['smolagent', 'Groq', 'SpeechRecognition'],
-  },
-  {
     id: 'eldora-fidelity-card',
     lang: 'PHP',
     langColor: '#4F5D95',
